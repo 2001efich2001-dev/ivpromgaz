@@ -146,4 +146,75 @@ document.addEventListener('DOMContentLoaded', () => {
 
     updateCartIcon();
     navigateTo('home');
+
+    // ========== МОДАЛЬНОЕ ОКНО ==========
+const modal = document.getElementById('productModal');
+const modalTitle = document.getElementById('modalTitle');
+const modalPrice = document.getElementById('modalPrice');
+const modalFullDesc = document.getElementById('modalFullDesc');
+const modalImage = document.getElementById('modalImage');
+const modalAddToCart = document.getElementById('modalAddToCart');
+let currentModalProduct = null;
+
+// Открыть модалку
+function openModal(productId) {
+    const product = products.find(p => p.id === productId);
+    if (!product) return;
+    
+    currentModalProduct = product;
+    modalTitle.textContent = product.name;
+    modalPrice.textContent = `${product.price.toLocaleString()} ₽`;
+    
+    // Полное описание с характеристиками
+    modalFullDesc.innerHTML = `
+        <p><strong>📋 Подробное описание:</strong></p>
+        <p>${product.fullDesc || product.desc}</p>
+        <p style="margin-top: 10px;"><strong>📦 Артикул:</strong> АЗГС-${product.id}</p>
+        <p><strong>🚚 Доставка:</strong> по всей России</p>
+        <p><strong>🔧 Гарантия:</strong> 12 месяцев</p>
+    `;
+    
+    // Фото (если есть реальное)
+    if (product.img) {
+        modalImage.src = product.img;
+        modalImage.alt = product.name;
+    } else {
+        modalImage.parentElement.innerHTML = `<div style="padding:40px;">🖼️ ${product.imgPlaceholder}</div>`;
+        // восстанавливаем структуру потом
+        setTimeout(() => {
+            if (modalImage) modalImage.style.display = 'none';
+        }, 0);
+    }
+    
+    modal.classList.add('active');
+}
+
+// Закрыть модалку
+function closeModal() {
+    modal.classList.remove('active');
+    currentModalProduct = null;
+}
+
+// Обработчики
+document.querySelectorAll('.product-card').forEach(card => {
+    card.addEventListener('click', (e) => {
+        // Не открывать модалку, если кликнули на кнопку "Добавить в корзину"
+        if (e.target.classList.contains('add-to-cart-btn')) return;
+        const id = parseInt(card.getAttribute('data-id'));
+        openModal(id);
+    });
+});
+
+document.querySelector('.modal-close').addEventListener('click', closeModal);
+modal.addEventListener('click', (e) => {
+    if (e.target === modal) closeModal();
+});
+
+// Кнопка "В корзину" внутри модалки
+modalAddToCart.addEventListener('click', () => {
+    if (currentModalProduct) {
+        addToCart(currentModalProduct.id);
+        closeModal();
+    }
+});
 });
