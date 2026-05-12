@@ -92,6 +92,7 @@ main {
     text-align: center;
 }
 
+/* Карточки товаров */
 .catalog-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
@@ -104,6 +105,7 @@ main {
     overflow: hidden;
     box-shadow: 0 5px 15px rgba(0,0,0,0.05);
     transition: transform 0.2s, box-shadow 0.2s;
+    cursor: pointer;
 }
 
 .product-card:hover {
@@ -112,13 +114,19 @@ main {
 }
 
 .product-img {
-    background: #eef2f6;
-    height: 200px;
+    background: white;
+    height: 250px;
     display: flex;
     align-items: center;
     justify-content: center;
-    color: #7f8c8d;
-    font-size: 14px;
+    padding: 20px;
+    border-bottom: 1px solid #eef2f6;
+}
+
+.product-img img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
 }
 
 .product-info {
@@ -129,6 +137,7 @@ main {
     font-size: 18px;
     font-weight: 600;
     margin-bottom: 8px;
+    color: #1e5f8e;
 }
 
 .product-price {
