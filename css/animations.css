@@ -1,0 +1,88 @@
+/* ========== АНИМАЦИИ ========== */
+
+/* Появление карточек при загрузке */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.product-card {
+    animation: fadeInUp 0.5s ease forwards;
+    opacity: 0; /* скрыто до анимации */
+}
+
+/* Задержки для каждой карточки (создаёт волну) */
+.product-card:nth-child(1) { animation-delay: 0.05s; }
+.product-card:nth-child(2) { animation-delay: 0.10s; }
+.product-card:nth-child(3) { animation-delay: 0.15s; }
+.product-card:nth-child(4) { animation-delay: 0.20s; }
+.product-card:nth-child(5) { animation-delay: 0.25s; }
+.product-card:nth-child(6) { animation-delay: 0.30s; }
+.product-card:nth-child(7) { animation-delay: 0.35s; }
+.product-card:nth-child(8) { animation-delay: 0.40s; }
+.product-card:nth-child(9) { animation-delay: 0.45s; }
+.product-card:nth-child(10) { animation-delay: 0.50s; }
+
+/* Вспышка при добавлении в корзину */
+@keyframes flash {
+    0% { background-color: #fff; }
+    50% { background-color: #c6f7d0; }
+    100% { background-color: #fff; }
+}
+
+.product-card.flash {
+    animation: flash 0.5s ease;
+}
+
+/* Анимация иконки корзины при добавлении */
+@keyframes cartBump {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.2); background: #c6f7d0; }
+    100% { transform: scale(1); }
+}
+
+.cart-icon.bump {
+    animation: cartBump 0.3s ease;
+}
+
+/* Плавное появление отзывов */
+.review-card {
+    animation: fadeInUp 0.5s ease forwards;
+    opacity: 0;
+}
+
+.review-card:nth-child(1) { animation-delay: 0.05s; }
+.review-card:nth-child(2) { animation-delay: 0.15s; }
+.review-card:nth-child(3) { animation-delay: 0.25s; }
+
+/* Плавное появление контактов */
+.contacts-wrapper {
+    animation: fadeInUp 0.5s ease forwards;
+    opacity: 0;
+    animation-delay: 0.1s;
+}
+
+/* Анимация для кнопок */
+.btn {
+    transition: all 0.2s ease;
+}
+
+.btn:active {
+    transform: scale(0.97);
+}
+
+/* Анимация для иконки корзины в шапке */
+.cart-icon {
+    transition: all 0.2s ease;
+}
+
+/* Анимация для футера */
+.footer {
+    transition: all 0.3s ease;
+}
