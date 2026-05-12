@@ -341,7 +341,7 @@ html {
 }
 
 .logo-img {
-    height: 50px;        /* подберите под свой логотип */
+    height: 100px;        /* подберите под свой логотип */
     width: auto;
     display: block;
 }
