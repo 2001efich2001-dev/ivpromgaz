@@ -120,13 +120,14 @@ main {
     align-items: center;
     justify-content: center;
     padding: 20px;
-    border-bottom: 1px solid #eef2f6;
 }
 
 .product-img img {
     max-width: 100%;
     max-height: 100%;
-    object-fit: contain;
+    width: auto;
+    height: auto;
+    object-fit: contain;  /* картинка целиком вписывается в рамку */
 }
 
 .product-info {
