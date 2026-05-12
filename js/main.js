@@ -20,9 +20,9 @@ function navigateTo(page) {
     
     if (page === 'cart') {
         setTimeout(() => {
+            // Форма заказа
             const form = document.getElementById('orderForm');
             if (form) {
-                // Убираем старый обработчик, чтобы не дублировать
                 const newForm = form.cloneNode(true);
                 form.parentNode.replaceChild(newForm, form);
                 
@@ -51,13 +51,34 @@ function navigateTo(page) {
                     showNotification('Заявка отправлена! Менеджер свяжется с вами');
                 });
             }
-        }, 100);
+            
+            // Обработчики кнопок корзины (+ / - / удалить)
+            document.querySelectorAll('.qty-plus').forEach(btn => {
+                btn.onclick = () => {
+                    const id = parseInt(btn.getAttribute('data-id'));
+                    updateQuantity(id, 1);
+                };
+            });
+            
+            document.querySelectorAll('.qty-minus').forEach(btn => {
+                btn.onclick = () => {
+                    const id = parseInt(btn.getAttribute('data-id'));
+                    updateQuantity(id, -1);
+                };
+            });
+            
+            document.querySelectorAll('.cart-item-remove').forEach(btn => {
+                btn.onclick = () => {
+                    const id = parseInt(btn.getAttribute('data-id'));
+                    removeItem(id);
+                };
+            });
+        }, 50);
     }
 }
 
 // ========== ИНИЦИАЛИЗАЦИЯ ==========
 document.addEventListener('DOMContentLoaded', () => {
-    // Обработка кликов по меню
     document.querySelectorAll('.nav-links a').forEach(link => {
         link.addEventListener('click', (e) => {
             e.preventDefault();
@@ -66,15 +87,11 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // Обработка клика по корзине
-    const cartBtn = document.getElementById('cartBtn');
-    if (cartBtn) {
-        cartBtn.addEventListener('click', () => {
-            navigateTo('cart');
-        });
-    }
+    document.getElementById('cartBtn').addEventListener('click', () => {
+        navigateTo('cart');
+    });
 
-    // Делаем функции глобальными для вызова из HTML (ЭТО КЛЮЧЕВОЙ МОМЕНТ!)
+    // Глобальные функции
     window.addToCart = addToCart;
     window.updateQuantity = updateQuantity;
     window.removeItem = removeItem;
@@ -82,7 +99,6 @@ document.addEventListener('DOMContentLoaded', () => {
     window.renderCartPage = renderCartPage;
     window.showNotification = showNotification;
 
-    // Старт
     updateCartIcon();
     navigateTo('home');
 });
