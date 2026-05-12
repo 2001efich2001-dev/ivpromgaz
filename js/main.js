@@ -5,6 +5,66 @@ async function sendOrderToEmail(formData) {
     return true;
 }
 
+// ========== ПРИВЯЗКА ОБРАБОТЧИКОВ КНОПОК КОРЗИНЫ ==========
+function attachCartHandlers() {
+    // Кнопки "+"
+    document.querySelectorAll('.qty-plus').forEach(btn => {
+        btn.onclick = () => {
+            const id = parseInt(btn.getAttribute('data-id'));
+            updateQuantity(id, 1);
+        };
+    });
+    
+    // Кнопки "-"
+    document.querySelectorAll('.qty-minus').forEach(btn => {
+        btn.onclick = () => {
+            const id = parseInt(btn.getAttribute('data-id'));
+            updateQuantity(id, -1);
+        };
+    });
+    
+    // Кнопки удаления
+    document.querySelectorAll('.cart-item-remove').forEach(btn => {
+        btn.onclick = () => {
+            const id = parseInt(btn.getAttribute('data-id'));
+            removeItem(id);
+        };
+    });
+    
+    // Форма заказа
+    const form = document.getElementById('orderForm');
+    if (form) {
+        const newForm = form.cloneNode(true);
+        form.parentNode.replaceChild(newForm, form);
+        
+        newForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const name = document.getElementById('orderName')?.value;
+            const phone = document.getElementById('orderPhone')?.value;
+            const email = document.getElementById('orderEmail')?.value;
+            const comment = document.getElementById('orderComment')?.value;
+            
+            if (!name || !phone) {
+                showNotification('Заполните имя и телефон', true);
+                return;
+            }
+            
+            if (cart.length === 0) {
+                showNotification('Корзина пуста', true);
+                return;
+            }
+            
+            const formData = { name, phone, email, comment };
+            await sendOrderToEmail(formData);
+            
+            clearCart();
+            document.getElementById('page-content').innerHTML = renderCartPage();
+            attachCartHandlers();
+            showNotification('Заявка отправлена! Менеджер свяжется с вами');
+        });
+    }
+}
+
 // ========== НАВИГАЦИЯ ==========
 let currentPage = 'home';
 
@@ -13,68 +73,13 @@ function navigateTo(page) {
     const contentDiv = document.getElementById('page-content');
     if (page === 'home') contentDiv.innerHTML = renderHome();
     else if (page === 'catalog') contentDiv.innerHTML = renderCatalog();
-    else if (page === 'cart') contentDiv.innerHTML = renderCartPage();
+    else if (page === 'cart') {
+        contentDiv.innerHTML = renderCartPage();
+        setTimeout(() => attachCartHandlers(), 50);
+    }
     else if (page === 'reviews') contentDiv.innerHTML = renderReviews();
     else if (page === 'contacts') contentDiv.innerHTML = renderContacts();
     else contentDiv.innerHTML = renderHome();
-    
-    if (page === 'cart') {
-        setTimeout(() => {
-            // Форма заказа
-            const form = document.getElementById('orderForm');
-            if (form) {
-                const newForm = form.cloneNode(true);
-                form.parentNode.replaceChild(newForm, form);
-                
-                newForm.addEventListener('submit', async (e) => {
-                    e.preventDefault();
-                    const name = document.getElementById('orderName').value;
-                    const phone = document.getElementById('orderPhone').value;
-                    const email = document.getElementById('orderEmail').value;
-                    const comment = document.getElementById('orderComment').value;
-                    
-                    if (!name || !phone) {
-                        showNotification('Заполните имя и телефон', true);
-                        return;
-                    }
-                    
-                    if (cart.length === 0) {
-                        showNotification('Корзина пуста', true);
-                        return;
-                    }
-                    
-                    const formData = { name, phone, email, comment };
-                    await sendOrderToEmail(formData);
-                    
-                    clearCart();
-                    renderCartPage();
-                    showNotification('Заявка отправлена! Менеджер свяжется с вами');
-                });
-            }
-            
-            // Обработчики кнопок корзины (+ / - / удалить)
-            document.querySelectorAll('.qty-plus').forEach(btn => {
-                btn.onclick = () => {
-                    const id = parseInt(btn.getAttribute('data-id'));
-                    updateQuantity(id, 1);
-                };
-            });
-            
-            document.querySelectorAll('.qty-minus').forEach(btn => {
-                btn.onclick = () => {
-                    const id = parseInt(btn.getAttribute('data-id'));
-                    updateQuantity(id, -1);
-                };
-            });
-            
-            document.querySelectorAll('.cart-item-remove').forEach(btn => {
-                btn.onclick = () => {
-                    const id = parseInt(btn.getAttribute('data-id'));
-                    removeItem(id);
-                };
-            });
-        }, 50);
-    }
 }
 
 // ========== ИНИЦИАЛИЗАЦИЯ ==========
@@ -96,8 +101,8 @@ document.addEventListener('DOMContentLoaded', () => {
     window.updateQuantity = updateQuantity;
     window.removeItem = removeItem;
     window.navigateTo = navigateTo;
-    window.renderCartPage = renderCartPage;
     window.showNotification = showNotification;
+    window.attachCartHandlers = attachCartHandlers;
 
     updateCartIcon();
     navigateTo('home');
