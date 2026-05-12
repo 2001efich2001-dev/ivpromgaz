@@ -1,5 +1,3 @@
-// ========== ОТРИСОВКА СТРАНИЦ ==========
-
 function renderHome() {
     return `
         <div class="section">
@@ -15,9 +13,10 @@ function renderHome() {
 function renderCatalog() {
     let html = `<div class="section"><h2 class="section-title">Каталог оборудования</h2><div class="catalog-grid">`;
     products.forEach(p => {
+        const imgContent = p.img ? `<img src="${p.img}" alt="${p.name}" style="width:100%; height:100%; object-fit:cover;">` : `<div style="padding:40px;">🖼️ ${p.name}</div>`;
         html += `
             <div class="product-card" data-id="${p.id}">
-                <div class="product-img">${p.imgPlaceholder}</div>
+                <div class="product-img">${imgContent}</div>
                 <div class="product-info">
                     <div class="product-title">${p.name}</div>
                     <div class="product-price">${p.price.toLocaleString()} ₽</div>
@@ -99,11 +98,6 @@ function renderCartPage() {
         </div>
     `;
     
-    itemsHtml += `</div>`;
-    
-    // Возвращаем HTML и ПОСЛЕ вставки навешиваем обработчики
-    // Для этого используем setTimeout в main.js
-    
     return itemsHtml;
 }
 
@@ -112,9 +106,9 @@ function renderReviews() {
         <div class="section">
             <h2 class="section-title">Отзывы клиентов</h2>
             <div class="reviews-grid">
-                <div class="review-card"><div class="review-name">ООО "ГазРесурс"</div><div class="review-text">Отличное оборудование, работаем 2 года без нареканий. Рекомендуем.</div></div>
+                <div class="review-card"><div class="review-name">ООО "ГазРесурс"</div><div class="review-text">Отличное оборудование, работаем 2 года без нареканий.</div></div>
                 <div class="review-card"><div class="review-name">ИП Смирнов</div><div class="review-text">Быстрая доставка в Шую, помогли с пусконаладкой.</div></div>
-                <div class="review-card"><div class="review-name">АЗГС "Лидер"</div><div class="review-text">Профессиональный подход. Сайт удобный, будем заказывать еще.</div></div>
+                <div class="review-card"><div class="review-name">АЗГС "Лидер"</div><div class="review-text">Профессиональный подход. Рекомендуем.</div></div>
             </div>
         </div>
     `;
@@ -126,10 +120,10 @@ function renderContacts() {
             <h2 class="section-title">Контакты</h2>
             <div class="contacts-wrapper">
                 <div class="contact-info">
-                    <p><strong>📞 Телефон:</strong> +7 (905) 109-19-96</p>
-                    <p><strong>✉️ Email:</strong> 2001roker@mail.ru</p>
-                    <p><strong>📍 Адрес:</strong> Ивановская область, г. Шуя</p>
-                    <p><strong>⏰ Режим работы:</strong> Пн-Пт 9:00–17:00</p>
+                    <p><strong>📞 Телефон:</strong> +7 (999) 123-45-67</p>
+                    <p><strong>✉️ Email:</strong> sales@azgs-msk.ru</p>
+                    <p><strong>📍 Адрес:</strong> Ивановская область, г. Шуя, ул. Промышленная, д. 8</p>
+                    <p><strong>⏰ Режим работы:</strong> Пн-Пт 9:00–18:00</p>
                 </div>
                 <div class="map">
                     <iframe src="https://yandex.ru/map-widget/v1/?ll=41.388634,56.850417&z=12&pt=41.388634,56.850417" allowfullscreen></iframe>
