@@ -13,14 +13,14 @@ function renderHome() {
 function renderCatalog() {
     let html = `<div class="section"><h2 class="section-title">Каталог оборудования</h2><div class="catalog-grid">`;
     products.forEach(p => {
-        const imgContent = p.img ? `<img src="${p.img}" alt="${p.name}" style="width:100%; height:100%; object-fit:cover;">` : `<div style="padding:40px;">🖼️ ${p.name}</div>`;
+        const imgContent = p.img ? `<img src="${p.img}" alt="${p.name}">` : `<div style="padding:40px;">🖼️ ${p.name}</div>`;
         html += `
             <div class="product-card" data-id="${p.id}">
                 <div class="product-img">${imgContent}</div>
                 <div class="product-info">
                     <div class="product-title">${p.name}</div>
                     <div class="product-price">${p.price.toLocaleString()} ₽</div>
-                    <div style="font-size:14px; color:#666; margin-bottom:15px;">${p.desc}</div>
+                    <div class="product-desc">${p.desc}</div>
                     <button class="btn add-to-cart-btn" data-id="${p.id}">Добавить в корзину</button>
                 </div>
             </div>
