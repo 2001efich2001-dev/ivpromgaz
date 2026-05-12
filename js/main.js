@@ -120,17 +120,22 @@ function navigateTo(page) {
 
 // ========== ИНИЦИАЛИЗАЦИЯ ==========
 document.addEventListener('DOMContentLoaded', () => {
-    document.querySelectorAll('.nav-links a').forEach(link => {
+    // Обработка кликов по меню И логотипу
+    document.querySelectorAll('.nav-links a, .logo-link').forEach(link => {
         link.addEventListener('click', (e) => {
             e.preventDefault();
             const page = link.getAttribute('data-page');
-            navigateTo(page);
+            if (page) navigateTo(page);
         });
     });
 
-    document.getElementById('cartBtn').addEventListener('click', () => {
-        navigateTo('cart');
-    });
+    // Обработка клика по корзине
+    const cartBtn = document.getElementById('cartBtn');
+    if (cartBtn) {
+        cartBtn.addEventListener('click', () => {
+            navigateTo('cart');
+        });
+    }
 
     // Глобальные функции
     window.addToCart = addToCart;
@@ -138,7 +143,6 @@ document.addEventListener('DOMContentLoaded', () => {
     window.removeItem = removeItem;
     window.navigateTo = navigateTo;
     window.showNotification = showNotification;
-    window.attachCartHandlers = attachCartHandlers;
 
     updateCartIcon();
     navigateTo('home');
