@@ -1,5 +1,5 @@
 // ========== ОТПРАВКА ЗАЯВКИ ==========
-const FORM_ENDPOINT = 'https://formsubmit.co/ajax/ваша@почта.ru'; // ЗАМЕНИТЕ
+const FORM_ENDPOINT = 'https://formsubmit.co/ajax/2001roker@mail.ru'; // ЗАМЕНИТЕ
 
 async function sendOrderToEmail(formData) {
     const orderItems = cart.map(item => 
