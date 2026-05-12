@@ -1,6 +1,4 @@
 // ========== ОТПРАВКА ЗАЯВКИ (демо-режим) ==========
-// Для реальной отправки замените на Formspree (см. инструкцию выше)
-
 async function sendOrderToEmail(formData) {
     console.log('Отправка заявки (демо-режим):', formData, cart);
     alert(`ДЕМО: Заявка отправлена!\n\nИмя: ${formData.name}\nТелефон: ${formData.phone}\nEmail: ${formData.email}\nТоваров: ${cart.length} шт.\nСумма: ${getCartTotal().toLocaleString()} ₽\n\nРеальная отправка заработает после настройки Formspree.`);
@@ -24,7 +22,11 @@ function navigateTo(page) {
         setTimeout(() => {
             const form = document.getElementById('orderForm');
             if (form) {
-                form.addEventListener('submit', async (e) => {
+                // Убираем старый обработчик, чтобы не дублировать
+                const newForm = form.cloneNode(true);
+                form.parentNode.replaceChild(newForm, form);
+                
+                newForm.addEventListener('submit', async (e) => {
                     e.preventDefault();
                     const name = document.getElementById('orderName').value;
                     const phone = document.getElementById('orderPhone').value;
@@ -32,12 +34,12 @@ function navigateTo(page) {
                     const comment = document.getElementById('orderComment').value;
                     
                     if (!name || !phone) {
-                        alert('Заполните имя и телефон');
+                        showNotification('Заполните имя и телефон', true);
                         return;
                     }
                     
                     if (cart.length === 0) {
-                        alert('Корзина пуста');
+                        showNotification('Корзина пуста', true);
                         return;
                     }
                     
@@ -46,7 +48,7 @@ function navigateTo(page) {
                     
                     clearCart();
                     renderCartPage();
-                    alert('Спасибо! Менеджер свяжется с вами в ближайшее время.');
+                    showNotification('Заявка отправлена! Менеджер свяжется с вами');
                 });
             }
         }, 100);
@@ -65,16 +67,20 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     // Обработка клика по корзине
-    document.getElementById('cartBtn').addEventListener('click', () => {
-        navigateTo('cart');
-    });
+    const cartBtn = document.getElementById('cartBtn');
+    if (cartBtn) {
+        cartBtn.addEventListener('click', () => {
+            navigateTo('cart');
+        });
+    }
 
-    // Делаем функции глобальными для вызова из HTML
+    // Делаем функции глобальными для вызова из HTML (ЭТО КЛЮЧЕВОЙ МОМЕНТ!)
     window.addToCart = addToCart;
     window.updateQuantity = updateQuantity;
     window.removeItem = removeItem;
     window.navigateTo = navigateTo;
     window.renderCartPage = renderCartPage;
+    window.showNotification = showNotification;
 
     // Старт
     updateCartIcon();
