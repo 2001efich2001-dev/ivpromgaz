@@ -325,3 +325,6 @@ main {
         display: none;
     }
 }
+html {
+    scroll-behavior: smooth;
+}
