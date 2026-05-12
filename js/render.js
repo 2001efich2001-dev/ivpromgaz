@@ -16,13 +16,13 @@ function renderCatalog() {
     let html = `<div class="section"><h2 class="section-title">Каталог оборудования</h2><div class="catalog-grid">`;
     products.forEach(p => {
         html += `
-            <div class="product-card">
+            <div class="product-card" data-id="${p.id}">
                 <div class="product-img">${p.imgPlaceholder}</div>
                 <div class="product-info">
                     <div class="product-title">${p.name}</div>
                     <div class="product-price">${p.price.toLocaleString()} ₽</div>
                     <div style="font-size:14px; color:#666; margin-bottom:15px;">${p.desc}</div>
-                    <button class="btn" onclick="addToCart(${p.id})">Добавить в корзину</button>
+                    <button class="btn add-to-cart-btn" data-id="${p.id}">Добавить в корзину</button>
                 </div>
             </div>
         `;
