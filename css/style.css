@@ -328,3 +328,20 @@ main {
 html {
     scroll-behavior: smooth;
 }
+
+/* Логотип */
+.logo-link {
+    display: inline-block;
+    text-decoration: none;
+    transition: opacity 0.2s;
+}
+
+.logo-link:hover {
+    opacity: 0.8;
+}
+
+.logo-img {
+    height: 50px;        /* подберите под свой логотип */
+    width: auto;
+    display: block;
+}
