@@ -74,9 +74,7 @@ function addToCart(productId) {
     }
     saveCart();
     
-    // === ВИЗУАЛЬНЫЕ ЭФФЕКТЫ ===
-    
-    // 1. Вспышка на карточке товара
+    // Визуальные эффекты
     const cards = document.querySelectorAll('.product-card');
     cards.forEach(card => {
         const btn = card.querySelector(`button[onclick*="addToCart(${productId})"]`);
@@ -86,15 +84,22 @@ function addToCart(productId) {
         }
     });
     
-    // 2. Анимация иконки корзины
     const cartIcon = document.getElementById('cartBtn');
     if (cartIcon) {
         cartIcon.classList.add('bump');
         setTimeout(() => cartIcon.classList.remove('bump'), 300);
     }
     
-    // 3. Красивое уведомление
     showNotification(`${product.name} добавлен в корзину`);
+    
+    // Если мы на странице корзины — перерисовываем её
+    if (typeof currentPage !== 'undefined' && currentPage === 'cart') {
+        if (typeof renderCartPage === 'function') {
+            document.getElementById('page-content').innerHTML = renderCartPage();
+            // Перепривязываем обработчики после перерисовки
+            setTimeout(() => attachCartHandlers(), 50);
+        }
+    }
 }
 
 function updateQuantity(productId, delta) {
@@ -107,7 +112,14 @@ function updateQuantity(productId, delta) {
         }
     }
     saveCart();
-    if (typeof renderCartPage === 'function') renderCartPage();
+    
+    // Перерисовываем страницу корзины, если мы на ней
+    if (typeof currentPage !== 'undefined' && currentPage === 'cart') {
+        if (typeof renderCartPage === 'function') {
+            document.getElementById('page-content').innerHTML = renderCartPage();
+            setTimeout(() => attachCartHandlers(), 50);
+        }
+    }
 }
 
 function removeItem(productId) {
@@ -115,8 +127,15 @@ function removeItem(productId) {
     if (item) {
         cart = cart.filter(i => i.id !== productId);
         saveCart();
-        if (typeof renderCartPage === 'function') renderCartPage();
         showNotification(`${item.name} удалён из корзины`, true);
+        
+        // Перерисовываем страницу корзины, если мы на ней
+        if (typeof currentPage !== 'undefined' && currentPage === 'cart') {
+            if (typeof renderCartPage === 'function') {
+                document.getElementById('page-content').innerHTML = renderCartPage();
+                setTimeout(() => attachCartHandlers(), 50);
+            }
+        }
     }
 }
 
