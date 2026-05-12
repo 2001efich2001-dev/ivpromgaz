@@ -103,6 +103,7 @@ function updateQuantity(productId, delta) {
         item.quantity += delta;
         if (item.quantity <= 0) {
             cart = cart.filter(i => i.id !== productId);
+            showNotification(`${item.name} удалён из корзины`, true);
         }
     }
     saveCart();
