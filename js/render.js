@@ -62,11 +62,11 @@ function renderCartPage() {
                 <span><strong>${item.name}</strong></span>
                 <span>${item.price.toLocaleString()} ₽</span>
                 <div class="cart-item-quantity">
-                    <button onclick="updateQuantity(${item.id}, -1)">-</button>
+                    <button class="qty-minus" data-id="${item.id}">-</button>
                     <span>${item.quantity}</span>
-                    <button onclick="updateQuantity(${item.id}, 1)">+</button>
+                    <button class="qty-plus" data-id="${item.id}">+</button>
                 </div>
-                <button class="cart-item-remove" onclick="removeItem(${item.id})">✕</button>
+                <button class="cart-item-remove" data-id="${item.id}">✕</button>
             </div>
         `;
     });
@@ -100,6 +100,10 @@ function renderCartPage() {
     `;
     
     itemsHtml += `</div>`;
+    
+    // Возвращаем HTML и ПОСЛЕ вставки навешиваем обработчики
+    // Для этого используем setTimeout в main.js
+    
     return itemsHtml;
 }
 
