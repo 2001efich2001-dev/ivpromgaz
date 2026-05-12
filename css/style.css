@@ -346,6 +346,7 @@ html {
     display: block;
 }
 /* ========== МОДАЛЬНОЕ ОКНО ========== */
+/* Модальное окно */
 .modal {
     display: none;
     position: fixed;
@@ -358,33 +359,15 @@ html {
     justify-content: center;
     align-items: center;
 }
-
-.modal.active {
-    display: flex;
-}
-
+.modal.active { display: flex; }
 .modal-content {
     background: white;
     border-radius: 30px;
     max-width: 900px;
     width: 90%;
-    max-height: 85vh;
-    overflow-y: auto;
     position: relative;
-    animation: modalFadeIn 0.3s ease;
+    padding: 30px;
 }
-
-@keyframes modalFadeIn {
-    from {
-        opacity: 0;
-        transform: scale(0.9);
-    }
-    to {
-        opacity: 1;
-        transform: scale(1);
-    }
-}
-
 .modal-close {
     position: absolute;
     top: 15px;
@@ -393,78 +376,19 @@ html {
     cursor: pointer;
     background: none;
     border: none;
-    color: #666;
-    transition: color 0.2s;
 }
-
-.modal-close:hover {
-    color: #e53e3e;
-}
-
 .modal-body {
     display: flex;
-    flex-direction: row;
-    padding: 30px;
     gap: 30px;
 }
-
-.modal-image {
-    flex: 1;
-    background: #eef2f6;
-    border-radius: 20px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    min-height: 300px;
-}
-
-.modal-image img {
-    max-width: 100%;
-    max-height: 300px;
-    border-radius: 20px;
-    object-fit: contain;
-}
-
-.modal-info {
-    flex: 1;
-}
-
-.modal-info h2 {
-    font-size: 24px;
-    margin-bottom: 15px;
-    color: #1e5f8e;
-}
-
+.modal-image { flex: 1; text-align: center; }
+.modal-info { flex: 1; }
 .modal-price {
     font-size: 28px;
-    font-weight: 700;
     color: #2b9c5c;
+    font-weight: 700;
     margin: 15px 0;
 }
-
-.modal-desc {
-    color: #4a5568;
-    line-height: 1.6;
-    margin: 15px 0;
-}
-
-.modal-char {
-    background: #f8fafc;
-    padding: 15px;
-    border-radius: 16px;
-    margin: 15px 0;
-}
-
-.modal-char p {
-    margin: 8px 0;
-}
-
 @media (max-width: 768px) {
-    .modal-body {
-        flex-direction: column;
-        padding: 20px;
-    }
-    .modal-image {
-        min-height: 200px;
-    }
+    .modal-body { flex-direction: column; }
 }
