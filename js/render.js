@@ -126,10 +126,10 @@ function renderContacts() {
             <h2 class="section-title">Контакты</h2>
             <div class="contacts-wrapper">
                 <div class="contact-info">
-                    <p><strong>📞 Телефон:</strong> +7 (999) 123-45-67</p>
-                    <p><strong>✉️ Email:</strong> sales@azgs-msk.ru</p>
-                    <p><strong>📍 Адрес:</strong> Ивановская область, г. Шуя, ул. Промышленная, д. 8</p>
-                    <p><strong>⏰ Режим работы:</strong> Пн-Пт 9:00–18:00</p>
+                    <p><strong>📞 Телефон:</strong> +7 (905) 109-19-96</p>
+                    <p><strong>✉️ Email:</strong> 2001roker@mail.ru</p>
+                    <p><strong>📍 Адрес:</strong> Ивановская область, г. Шуя</p>
+                    <p><strong>⏰ Режим работы:</strong> Пн-Пт 9:00–17:00</p>
                 </div>
                 <div class="map">
                     <iframe src="https://yandex.ru/map-widget/v1/?ll=41.388634,56.850417&z=12&pt=41.388634,56.850417" allowfullscreen></iframe>
