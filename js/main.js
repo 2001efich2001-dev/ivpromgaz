@@ -1,8 +1,44 @@
 // ========== ОТПРАВКА ЗАЯВКИ (демо-режим) ==========
+// ========== ОТПРАВКА ЗАЯВКИ ЧЕРЕЗ FORMSUBMIT ==========
+const FORM_ENDPOINT = 'https://formsubmit.co/ajax/2001roker@mail.ru'; // ЗАМЕНИТЕ!
+
 async function sendOrderToEmail(formData) {
-    console.log('Отправка заявки (демо-режим):', formData, cart);
-    alert(`ДЕМО: Заявка отправлена!\n\nИмя: ${formData.name}\nТелефон: ${formData.phone}\nEmail: ${formData.email}\nТоваров: ${cart.length} шт.\nСумма: ${getCartTotal().toLocaleString()} ₽\n\nРеальная отправка заработает после настройки Formspree.`);
-    return true;
+    // Формируем список товаров для письма
+    const orderItems = cart.map(item => 
+        `${item.name} x${item.quantity} = ${(item.price * item.quantity).toLocaleString()} ₽`
+    ).join('\n');
+    
+    const total = getCartTotal().toLocaleString();
+    
+    // Данные для отправки
+    const payload = {
+        name: formData.name,
+        phone: formData.phone,
+        email: formData.email,
+        message: `📦 НОВАЯ ЗАЯВКА С САЙТА АЗГС\n\n👤 Имя: ${formData.name}\n📞 Телефон: ${formData.phone}\n✉️ Email: ${formData.email || 'не указан'}\n💬 Комментарий: ${formData.comment || 'нет'}\n\n🛒 Состав заказа:\n${orderItems}\n\n💰 Итого: ${total} ₽`,
+        _subject: `Заявка с сайта АЗГС от ${formData.name}`,
+        _captcha: 'false'  // отключаем капчу для простоты
+    };
+
+    try {
+        const response = await fetch(FORM_ENDPOINT, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
+            },
+            body: JSON.stringify(payload)
+        });
+
+        if (response.ok) {
+            return true;
+        } else {
+            throw new Error('Ошибка отправки');
+        }
+    } catch (error) {
+        console.error('Ошибка:', error);
+        throw error;
+    }
 }
 
 // ========== ПРИВЯЗКА ОБРАБОТЧИКОВ КНОПОК КОРЗИНЫ ==========
