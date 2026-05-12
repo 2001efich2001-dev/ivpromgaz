@@ -41,5 +41,23 @@
 <script src="js/cart.js"></script>
 <script src="js/render.js"></script>
 <script src="js/main.js"></script>
+
+    <!-- Модальное окно -->
+<div id="productModal" class="modal">
+    <div class="modal-content">
+        <button class="modal-close">&times;</button>
+        <div class="modal-body">
+            <div class="modal-image">
+                <img id="modalImage" src="" alt="">
+            </div>
+            <div class="modal-info">
+                <h2 id="modalTitle"></h2>
+                <div class="modal-price" id="modalPrice"></div>
+                <div class="modal-char" id="modalFullDesc"></div>
+                <button class="btn" id="modalAddToCart">🛒 Добавить в корзину</button>
+            </div>
+        </div>
+    </div>
+</div>
 </body>
 </html>
