@@ -5,17 +5,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Оснащение АЗГС — оборудование для газовых заправок</title>
     <link rel="stylesheet" href="css/style.css">
-<link rel="stylesheet" href="css/animations.css">   
-    <!-- новая строка -->
+    <link rel="stylesheet" href="css/animations.css">
 </head>
 <body>
 
 <header class="header">
     <div class="container">
         <div class="nav">
-         <a href="#" data-page="home" class="logo-link">
-    <img src="images/logo.png" alt="АЗГС Оснащение" class="logo-img">
-</a>
+            <a href="#" data-page="home" class="logo-link">
+                <img src="images/logo.png" alt="АЗГС Оснащение" class="logo-img">
+            </a>
             <ul class="nav-links">
                 <li><a data-page="home">Главная</a></li>
                 <li><a data-page="catalog">Каталог</a></li>
@@ -37,12 +36,7 @@
     </div>
 </footer>
 
-<script src="js/data.js"></script>
-<script src="js/cart.js"></script>
-<script src="js/render.js"></script>
-<script src="js/main.js"></script>
-
-    <!-- Модальное окно -->
+<!-- Модальное окно -->
 <div id="productModal" class="modal">
     <div class="modal-content">
         <button class="modal-close">&times;</button>
@@ -53,11 +47,16 @@
             <div class="modal-info">
                 <h2 id="modalTitle"></h2>
                 <div class="modal-price" id="modalPrice"></div>
-                <div class="modal-char" id="modalFullDesc"></div>
+                <div class="modal-desc" id="modalFullDesc"></div>
                 <button class="btn" id="modalAddToCart">🛒 Добавить в корзину</button>
             </div>
         </div>
     </div>
 </div>
+
+<script src="js/data.js"></script>
+<script src="js/cart.js"></script>
+<script src="js/render.js"></script>
+<script src="js/main.js"></script>
 </body>
 </html>
